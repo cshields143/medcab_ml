@@ -1,11 +1,8 @@
 import re
-import joblib
+import cloudpickle
 from spacy.lang.en import English
 from spacy.lang.en.stop_words import STOP_WORDS
-
-# i hate everything
-def dummy(x):
-	return x
+import os
 
 nlp = English()
 mystops = STOP_WORDS.union({
@@ -19,7 +16,7 @@ mystops = STOP_WORDS.union({
   'offers', 'technique', 'techniques', 'like', 'including'
 })
 
-def tokenize(s):
+def token_str(s):
   if (type(s)) != str:
     return list()
   
@@ -35,4 +32,7 @@ def tokenize(s):
     if t.lemma_ not in mystops and not t.is_punct
   ]
 
-  joblib.dump(tokenize, '../mydata/token.pkl')
+fn = os.path.join(os.path.dirname(__file__), '../data/token_str.pkl')
+pkl = cloudpickle.dumps(token_str)
+with open(fn, 'wb') as fh:
+  fh.write(pkl)

@@ -1,5 +1,7 @@
 import pandas as pd
-from api import mine_text
+from sklearn.externals import joblib
+
+tokenize = joblib.load('../data/token.pkl')
 
 def preprocess_table(filename):
 	'''
