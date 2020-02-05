@@ -1,7 +1,11 @@
 import pandas as pd
-from sklearn.externals import joblib
+import cloudpickle
+import os
 
-tokenize = joblib.load('../data/token.pkl')
+this_path = os.path.dirname(__file__)
+fn = os.path.join(this_path, '../data/token_str.pkl')
+fh = open(fn, 'rb')
+token_str = cloudpickle.loads(fh.read())
 
 def preprocess_table(filename):
 	'''
@@ -44,11 +48,13 @@ def mine_row(r):
 
 	# schema has 7 fields; mine each of them
 	for i in range(7):
-		for _ in mine_text(r[i]):
+		for _ in token_str(r[i]):
 			tok_buk.append(_.lower())
 
 	# turn our set into a list before returning
 	return tok_buk
 
-df = create_fulltext(preprocess_table('../data/cannabis.csv'))
-df.to_csv('tokenized.csv', index=False)
+fn1 = os.path.join(this_path, '../data/cannabis.csv')
+fn2 = os.path.join(this_path, '../data/cannabis_tokens.csv')
+df = create_fulltext(preprocess_table(fn1))
+df.to_csv(fn2, index=False)

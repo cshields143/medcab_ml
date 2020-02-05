@@ -22,4 +22,4 @@ token_str = cloudpickle.loads(fh.read())
 
 
 if __name__ == '__main__':
-	print(token_str('indica giggly happy'))
+	print(open('data/cannabis_tokens.csv', 'r').read()[:100])
