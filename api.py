@@ -4,6 +4,9 @@ import cloudpickle
 fh = open('data/token_str.pkl', 'rb')
 token_str = cloudpickle.loads(fh.read())
 
+fh = open('data/word_vect.pkl', 'rb')
+word_vect = cloudpickle.loads(fh.read())
+
 
 
 # run our model on a search query,
@@ -22,4 +25,7 @@ token_str = cloudpickle.loads(fh.read())
 
 
 if __name__ == '__main__':
-	print(open('data/cannabis_tokens.csv', 'r').read()[:100])
+	egq = 'indica giggly happy'
+	toks  = token_str(egq)
+	vec = word_vect.transform([toks])
+	print(vec.todense())
